@@ -1,0 +1,41 @@
+Average Order Value = DIVIDE(SUM(MENU[price]), COUNTROWS(ORDERS))
+Average Orders per User = DIVIDE(  COUNT(orders[order_date]),  COUNTROWS(USERS)))
+Average Price by Veg vs Non-Veg = AVERAGEX(FOOD,CALCULATE(AVERAGE(MENU[price])))
+Average Price per Cuisine = AVERAGEX( VALUES(MENU[cuisine]),CALCULATE(AVERAGE(MENU[price])))
+Average Rating = AVERAGE(RESTAURANT[rating])
+Average Rating by City =   AVERAGEX(VALUES(RESTAURANT[city]),CALCULATE(AVERAGE(RESTAURANT[rating])))
+Total Revenue = SUM(MENU[price])
+Total Orders = COUNTROWS(ORDERS)
+Total Orders date = COUNT(orders[order_date])
+Total Order Value = SUM(MENU[price])
+
+Highest Rated City = 
+VAR MaxRating = MAXX(
+    VALUES(RESTAURANT[city]),
+    [Average Rating by City]
+)
+RETURN
+CALCULATE(
+    MAX(RESTAURANT[city]),
+    FILTER(
+        ALL(RESTAURANT[city]),
+        [Average Rating by City] = MaxRating
+    )
+)
+Highest Rated Restaurant = 
+CALCULATE(
+    MAX(RESTAURANT[name]),
+    FILTER(
+        RESTAURANT,
+        RESTAURANT[rating] = [Highest Rating]
+    )
+)
+Highest Rating = MAX(RESTAURANT[rating])
+Non-Veg Item Count = COUNTAX(FILTER(FOOD, food[veg_or_non_veg] = "Non-Veg"), FOOD[f_id])
+Veg Item Count = COUNTAX(FILTER(FOOD, food[veg_or_non_veg] = "Veg"), FOOD[f_id])
+Orders by City = COUNTAX(FILTER(ORDERS, ORDERS[city] <> ""), ORDERS[city])
+Orders by Gender = 
+CALCULATE(
+    COUNT(orders[order_date]),
+    USERS[gender] = SELECTEDVALUE(USERS[gender])
+)
