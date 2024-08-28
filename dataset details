@@ -1,0 +1,5 @@
+FOOD -  f_id ,item, veg or non-veg
+MENU- menu_id,r-id,f-id,cuisine,price
+ORDERS- orderdate,user-id,r-id,city,
+RESTRAUNT- id, name , country , city, rating,cuisine,link,address
+USERS- user-id,name , age, gender, occupation
